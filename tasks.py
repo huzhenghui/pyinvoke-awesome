@@ -1,5 +1,6 @@
 from invoke import task
 import os
+import platform
 
 @task
 def invoke_choose(c):
@@ -7,9 +8,26 @@ def invoke_choose(c):
     print("\nChoose Recipe: ", result.stdout)
     c.run("invoke " + result.stdout)
 
+@task
+def invoke_fzf(c):
+    result = c.run('pwsh -c "invoke --list --list-format=json | ConvertFrom-Json | Select-Object -ExpandProperty tasks | Select-Object -ExpandProperty name | fzf"')
+    print("\nChoose Recipe: ", result.stdout)
+    c.run("invoke " + result.stdout)
+
+@task
+def unknown_os(c):
+    pass
+
 @task(default=True, post=[invoke_choose])
 def default_task(c):
     pass
+
+@task
+def default_task_2(c):
+    os_default = {
+        'Windows' : invoke_fzf
+    }
+    os_default.get(platform.system(), unknown_os)(c)
 
 @task
 def invoke_list(c):
