@@ -1,6 +1,8 @@
 from invoke import task
+import json
 import os
 import platform
+import sys
 
 @task
 def invoke_choose(c):
@@ -16,15 +18,13 @@ def invoke_fzf(c):
 
 @task
 def unknown_os(c):
+    print("Unknown OS : ", platform.system())
     pass
 
-@task(default=True, post=[invoke_choose])
+@task(default=True)
 def default_task(c):
-    pass
-
-@task
-def default_task_2(c):
     os_default = {
+        'Darwin' : invoke_choose,
         'Windows' : invoke_fzf
     }
     os_default.get(platform.system(), unknown_os)(c)
@@ -39,7 +39,7 @@ def invoke_list_nested(c):
 
 @task
 def invoke_list_json(c):
-    result = c.run("invoke --list --list-format=json")
+    c.run("invoke --list --list-format=json")
 
 def get_pyinvoke_draft_dir(c):
     result = c.run("jump cd pyinvoke-draft")
@@ -57,3 +57,14 @@ def code(c):
         c.run("code " + workspace)
     else:
         c.run("code " + cwd)
+
+@task
+def executable(c):
+    print(sys.executable)
+
+@task
+def vscode_settings(c):
+    settings = {
+        "python.pythonPath" : sys.executable
+    }
+    print(json.dumps(settings))
