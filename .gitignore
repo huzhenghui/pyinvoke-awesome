@@ -1,2 +1,3 @@
 pyinvoke.code-workspace
 .vscode/settings.json
+django/start_run/my_site_name/
