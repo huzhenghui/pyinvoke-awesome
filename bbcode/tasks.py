@@ -10,6 +10,32 @@ def install_bbcode(c):
 
 
 @task
+def show_files_bbcode(c):
+    context: Context = c
+    context.run(sys.executable + " -m pip show --files bbcode")
+
+
+@task
+def inv_list(c):
+    context: Context = c
+    context.run('inv --list')
+
+
+@task
+def ghq_path(c):
+    context: Context = c
+    context.run(
+        'echo "$(ghq list --full-path https://github.com/huzhenghui/pyinvoke-awesome)/bbcode"')
+
+
+@task
+def inv_ghq_root_list(c):
+    context: Context = c
+    context.run(
+        'inv --search-root "$(ghq list --full-path https://github.com/huzhenghui/pyinvoke-awesome)/bbcode" --list')
+
+
+@task
 def bbcode_render_html(c):
     print(bbcode.render_html(sys.stdin.read()))
 
@@ -113,3 +139,12 @@ def sample_underline_bbcode_html_markdown_ansi(c):
     context: Context = c
     context.run(
         'inv sample-underline | ansifilter --bbcode | inv bbcode-parser-format | pandoc --from=html --to=markdown | mdcat')
+
+
+@task
+def sample_inv_help(c):
+    context: Context = c
+    # context.run(
+    #     'inv --help | ack --passthru --color --color-match="bold italic underline" "STRING"')
+    context.run(
+        'inv --help | ugrep --color=always --colors="cx=HUwK;ms=nHUwK;mt=hu+r+Y" --any-line --line-number "STRING"')
