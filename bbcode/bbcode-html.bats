@@ -2,15 +2,15 @@
 
 @test "convert b to strong" {
     result="$(echo -n "[b]convert b to strong[/b]" | inv bbcode-parser-format)"
-    [ "$result" == "<strong>convert b to strong</strong>" ]
+    [ "$result" == "<strong>convert&nbsp;b&nbsp;to&nbsp;strong</strong>" ]
 }
 
 @test "convert i to em" {
     result="$(echo -n "[i]convert i to em[/i]" | inv bbcode-parser-format)"
-    [ "$result" == "<em>convert i to em</em>" ]
+    [ "$result" == "<em>convert&nbsp;i&nbsp;to&nbsp;em</em>" ]
 }
 
 @test "convert u to strong" {
     result="$(echo -n "[u]convert u to strong[/u]" | inv bbcode-parser-format)"
-    [ "$result" == "<strong>convert u to strong</strong>" ]
+    [ "$result" == "<strong>convert&nbsp;u&nbsp;to&nbsp;strong</strong>" ]
 }

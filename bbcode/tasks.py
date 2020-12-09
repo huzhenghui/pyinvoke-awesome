@@ -40,12 +40,29 @@ def bbcode_render_html(c):
     print(bbcode.render_html(sys.stdin.read()))
 
 
-@task
-def bbcode_parser_format(c):
+def bbcode_parser_formatter(data: str) -> str:
     parser = bbcode.Parser()
     parser.add_simple_formatter('u', '<strong>%(value)s</strong>')
     parser.add_simple_formatter('color', '%(value)s')
-    print(parser.format(sys.stdin.read()))
+    parser.REPLACE_ESCAPE = (
+        ("&", "&amp;"),
+        ("<", "&lt;"),
+        (">", "&gt;"),
+        ('"', "&quot;"),
+        ("'", "&#39;"),
+        (" ", "&nbsp;"),
+    )
+    return parser.format(data)
+
+
+@task
+def bbcode_parser_format(c):
+    print(bbcode_parser_formatter(sys.stdin.read()))
+
+
+@task
+def bbcode_parser_format_pre(c):
+    print('<pre>' + bbcode_parser_formatter(sys.stdin.read()) + '</pre>')
 
 
 @task
@@ -147,4 +164,18 @@ def sample_inv_help(c):
     # context.run(
     #     'inv --help | ack --passthru --color --color-match="bold italic underline" "STRING"')
     context.run(
-        'inv --help | ugrep --color=always --colors="cx=HUwK;ms=nHUwK;mt=hu+r+Y" --any-line --line-number "STRING"')
+        'inv --help | ugrep --color=always --colors="cx=HUwK;ms=nHUwK;mt=hu+r+Y" --any-line "STRING"')
+
+
+@task
+def sample_inv_help_bbcode_html_browser(c):
+    context: Context = c
+    context.run(
+        'inv sample-inv-help | ansifilter --bbcode | inv bbcode-parser-format-pre | browser')
+
+
+@task
+def sample_inv_help_bbcode_html_markdown_ansi(c):
+    context: Context = c
+    context.run(
+        'inv sample-inv-help | ansifilter --bbcode | inv bbcode-parser-format | pandoc --from=html --to=markdown | mdcat')
