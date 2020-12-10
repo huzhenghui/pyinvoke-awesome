@@ -166,6 +166,13 @@ def sample_inv_help(c):
 
 
 @task
+def sample_inv_help_ansifilter_html_browser(c):
+    context: Context = c
+    context.run(
+        'inv sample-inv-help | ansifilter --html | browser')
+
+
+@task
 def sample_inv_help_bbcode_html_browser(c):
     context: Context = c
     context.run(
