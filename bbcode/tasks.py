@@ -161,8 +161,6 @@ def sample_underline_bbcode_html_markdown_ansi(c):
 @task
 def sample_inv_help(c):
     context: Context = c
-    # context.run(
-    #     'inv --help | ack --passthru --color --color-match="bold italic underline" "STRING"')
     context.run(
         'inv --help | ugrep --color=always --colors="cx=HUwK;ms=nHUwK;mt=hu+r+Y" --any-line "STRING"')
 
