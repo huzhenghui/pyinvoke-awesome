@@ -10,7 +10,7 @@
     [ "$result" == "convert&nbsp;3m&nbsp;<em>to&nbsp;i&nbsp;to</em>&nbsp;em<br />" ]
 }
 
-@test "convert 4m to u to strong" {
-    result="$(echo -e "convert 4m \033[4mto u to\033[0m strong" | ansifilter --bbcode | inv bbcode-parser-format)"
-    [ "$result" == "convert&nbsp;4m&nbsp;<strong>to&nbsp;u&nbsp;to</strong>&nbsp;strong<br />" ]
+@test "convert 4m to u to em" {
+    result="$(echo -e "convert 4m \033[4mto u to\033[0m em" | ansifilter --bbcode | inv bbcode-parser-format)"
+    [ "$result" == "convert&nbsp;4m&nbsp;<em>to&nbsp;u&nbsp;to</em>&nbsp;em<br />" ]
 }

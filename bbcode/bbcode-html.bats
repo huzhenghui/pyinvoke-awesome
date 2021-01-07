@@ -10,7 +10,7 @@
     [ "$result" == "<em>convert&nbsp;i&nbsp;to&nbsp;em</em>" ]
 }
 
-@test "convert u to strong" {
-    result="$(echo -n "[u]convert u to strong[/u]" | inv bbcode-parser-format)"
-    [ "$result" == "<strong>convert&nbsp;u&nbsp;to&nbsp;strong</strong>" ]
+@test "convert u to em" {
+    result="$(echo -n "[u]convert u to em[/u]" | inv bbcode-parser-format)"
+    [ "$result" == "<em>convert&nbsp;u&nbsp;to&nbsp;em</em>" ]
 }

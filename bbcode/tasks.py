@@ -42,7 +42,8 @@ def bbcode_render_html(c):
 
 def bbcode_parser_formatter(data: str) -> str:
     parser = bbcode.Parser()
-    parser.add_simple_formatter('u', '<strong>%(value)s</strong>')
+    # parser.add_simple_formatter('u', '<strong>%(value)s</strong>')
+    parser.add_simple_formatter('u', '<em>%(value)s</em>')
     parser.add_simple_formatter('color', '%(value)s')
     parser.REPLACE_ESCAPE = (
         ("&", "&amp;"),
